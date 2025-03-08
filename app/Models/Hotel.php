@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use JsonSerializable;
 
-class Hotel extends Model
+class Hotel extends Model implements JsonSerializable
 {
     use HasFactory, SoftDeletes;
 
@@ -15,5 +16,16 @@ class Hotel extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'stars' => $this->stars,
+            'city' => $this->city ? $this->city->name : null,
+            'description' => $this->description
+        ];
     }
 }
