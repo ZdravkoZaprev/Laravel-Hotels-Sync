@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HotelController extends Controller
 {
@@ -14,8 +15,6 @@ class HotelController extends Controller
      */
     public function index()
     {
-        Hotel::factory()->count(5)->create();
-
         $hotels = Hotel::all();
         return response()->json($hotels, 200);
     }
@@ -62,6 +61,13 @@ class HotelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+
+        // Check if the user is an admin
+        if ($user && $user->role !== 'admin') {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        dd('hello');
     }
 }
