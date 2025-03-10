@@ -6,20 +6,11 @@ use App\Http\Resources\HotelResource;
 use App\Models\City;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class HotelController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('role:admin')->only(['store', 'update', 'destroy']);
-    }
-
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -28,9 +19,6 @@ class HotelController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -40,14 +28,11 @@ class HotelController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         // Validate the incoming request
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string',
             'image' => 'required|url',
             'address' => 'required|string',
@@ -70,7 +55,14 @@ class HotelController extends Controller
         }
 
         $request->merge(['city_id' => $city->id]);
-        $hotel = Hotel::create($request->all());
+        $hotel = Hotel::create([
+            'name' => $validatedData['name'],
+            'image' => $validatedData['image'],
+            'address' => $validatedData['address'],
+            'description' => $validatedData['description'],
+            'stars' => $validatedData['stars'],
+            'city_id' => $city->id,
+        ]);
 
         return response()->json([
             'message' => 'Hotel created successfully',
@@ -80,10 +72,6 @@ class HotelController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -122,22 +110,17 @@ class HotelController extends Controller
         return response()->json([
             'message' => 'Hotel updated successfully.',
             'hotel' => $hotel
-        ], 200); // 200 OK status code
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $hotel = Hotel::findOrFail($id);
         $hotel->delete();
 
-        return response()->json([
-            'message' => 'Hotel deleted successfully.'
-        ], 200);
+        return response()->json(null, 204);
     }
 }

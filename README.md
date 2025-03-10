@@ -1,64 +1,67 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Little Emperors Tech Test
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This test should be completed using **Laravel**.
 
-## About Laravel
+Feel free to install any libraries or plugins to facilitate the tasks.  
+Ensure that all code is committed to the repository when you're done.  
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## **Test 1: Import Hotels Data**
+Implement a **console command** to import a file containing a list of hotels and store the data in a local database. 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Cities** should be stored in a separate table, ensuring that city names are unique.
+- You may use **any database engine** of your choice.
+- The data format can be either **CSV** or **JSON** but be easily extendable for other possible formats in the future.
+- Sample data files are provided in this repository.
+- To facilitate parsing, you may install any relevant import libraries via **Composer**.
+- The import script should be executed via a **console command**, accepting the file as a parameter and automatically detecting its format.
+- **Important:** The CSV file uses **semicolon (;)** as the delimiter to handle potential commas within fields like hotel names and descriptions.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## **Test 2: RESTful API for Hotel Management**
+Develop a **RESTful API** to handle **CRUD** operations for hotels imported in **Test 1**.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The API should include the following endpoints:
 
-## Laravel Sponsors
+1. **List all hotels**  
+   - Returns only: `id`, `name`, `image`, `stars`, and `city`.  
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+2. **Retrieve hotel details**  
+   - Fetches all details of a hotel by its `ID`.  
 
-### Premium Partners
+3. **Create a new hotel**  
+   - Adds a new hotel to the database.  
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+4. **Update an existing hotel**  
+   - Modifies the details of a given hotel.  
 
-## Contributing
+5. **Delete a hotel** *(Soft Delete)*  
+   - The hotel should not be permanently deleted but instead flagged as deleted.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+##### **Submission**
+- Submit the code to this **GitHub repository**.
+- Ensure the repository includes a **README.md** with:
+  - Project overview.
+  - Setup instructions.
+  - Any additional notes or dependencies.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## **Evaluation Criteria**
+As we are looking for a **senior developer**, the primary evaluation criteria will be:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+✅ **Code Quality:** Clean, consistent, scalable, and performant code.  
+✅ **Separation of Concerns:** Well-structured components, services, and utilities.  
+✅ **SOLID Principles & Design Patterns:** Demonstrating maintainable and extensible architecture.  
+✅ **Proper use of HTTP verbs and status codes:** Ensure that API calls correctly implement methods like `GET`, `POST`, `PUT`, and `DELETE`, and return appropriate error codes.  
+✅ **Best Practices:** Proper use of version control and documentation.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### **Final Notes**
+- The test is designed to assess your ability to write **efficient, maintainable, and high-quality code**.
+- Feel free to ask any clarifying questions before starting.
