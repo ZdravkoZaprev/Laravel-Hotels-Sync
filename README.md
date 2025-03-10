@@ -18,10 +18,14 @@ Ensure you have the following installed:
 
 -   PHP 8.x
 -   Composer
--   Laravel 10.x
 -   MySQL (running on default port `3306`)
 -   Postman (optional, for testing API endpoints)
-
+-  Ensure these extensions are enabled in your `php.ini` file:
+	```
+	extension=fileinfo
+	extension=pdo_mysql
+	extension=mysqli
+	```
 ### Installation Steps
 
 1.  Clone the repository:
@@ -50,11 +54,15 @@ Ensure you have the following installed:
     ```
     php artisan jwt:secret
     ```
-6.  Run migrations below to seed the database with 1 admin and 1 guest user (For test purposes):
+6. Run migrations:
+    ```
+    php artisan migrate
+    ```
+7.  Seed the database with 1 admin and 1 guest user (For test purposes):
     ```
     php artisan db:seed UserSeeder
     ```
-7.  Run the Laravel development server:
+8.  Run the Laravel development server:
     ```
     php artisan serve
     ```
@@ -91,15 +99,15 @@ php artisan app:import-hotels hotels.csv --delimiter=";"
     ```
     GET /api/hotels/{id}
     ```
--   **Create a new hotel**
+-   **Create a new hotel** _(Requires authentication with an admin user)_
     ```
     POST /api/hotels
     ```
--   **Update an existing hotel**
+-   **Update an existing hotel** _(Requires authentication with an admin user)_
     ```
     PUT /api/hotels/{id}
     ```
--   **Soft delete a hotel**
+-   **Soft delete a hotel** _(Requires authentication with an admin user)_
     ```
     DELETE /api/hotels/{id}
     ```
