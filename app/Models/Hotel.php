@@ -17,15 +17,4 @@ class Hotel extends Model implements JsonSerializable
     {
         return $this->belongsTo(City::class);
     }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'stars' => $this->stars,
-            'city' => $this->city ? $this->city->name : null,
-            'description' => $this->description
-        ];
-    }
 }

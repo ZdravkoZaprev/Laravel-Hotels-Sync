@@ -22,7 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
-Route::get('/hotels', [HotelController::class, 'index'])->middleware('auth:api');
-Route::delete('/hotel/{id}', [HotelController::class, 'destroy'])->middleware('auth:api');
+Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
+Route::get('/hotels/{id}', [HotelController::class, 'show'])->name('hotels.show');
+Route::post('/hotels', [HotelController::class, 'store'])->name('hotels.store');
+Route::patch('/hotels/{id}', [HotelController::class, 'update'])->name('hotels.update');
+Route::delete('/hotels/{id}', [HotelController::class, 'destroy'])->name('hotels.destroy');
