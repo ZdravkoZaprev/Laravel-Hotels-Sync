@@ -1,67 +1,109 @@
+
 # Little Emperors Tech Test
 
-This test should be completed using **Laravel**.
+## Project Overview
 
-Feel free to install any libraries or plugins to facilitate the tasks.  
-Ensure that all code is committed to the repository when you're done.  
+This Laravel project implements a hotel management system with data import functionality and a RESTful API. The application allows importing hotel data from JSON and CSV files, storing them in a database, and performing CRUD operations on hotels. The project follows best practices, including SOLID principles and proper separation of concerns.
 
----
+## Features
 
-## **Test 1: Import Hotels Data**
-Implement a **console command** to import a file containing a list of hotels and store the data in a local database. 
+-   **Hotel Data Import:** Import hotel data from JSON and CSV files using a console command.
+-   **RESTful API:** CRUD operations for managing hotels.
+-   **Soft Delete:** Hotels are not permanently removed but flagged as deleted.
+-   **JWT Authentication:** Secure API access with JSON Web Token.
 
-- **Cities** should be stored in a separate table, ensuring that city names are unique.
-- You may use **any database engine** of your choice.
-- The data format can be either **CSV** or **JSON** but be easily extendable for other possible formats in the future.
-- Sample data files are provided in this repository.
-- To facilitate parsing, you may install any relevant import libraries via **Composer**.
-- The import script should be executed via a **console command**, accepting the file as a parameter and automatically detecting its format.
-- **Important:** The CSV file uses **semicolon (;)** as the delimiter to handle potential commas within fields like hotel names and descriptions.
+## Setup Instructions
 
----
+Ensure you have the following installed:
 
-## **Test 2: RESTful API for Hotel Management**
-Develop a **RESTful API** to handle **CRUD** operations for hotels imported in **Test 1**.
+-   PHP 8.x
+-   Composer
+-   Laravel 10.x
+-   MySQL (running on default port `3306`)
+-   Postman (optional, for testing API endpoints)
 
-The API should include the following endpoints:
+### Installation Steps
 
-1. **List all hotels**  
-   - Returns only: `id`, `name`, `image`, `stars`, and `city`.  
+1.  Clone the repository:
+    ```
+    git clone <repository-url>
+    cd <project-directory>
+    ```
+2.  Install dependencies:
+    ```
+    composer install
+    ```
+3.  Copy the environment configuration file:
+    ```
+    cp .env.example .env
+    ```
+4.  Configure your `.env` file with database settings:
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=your_database_name
+    DB_USERNAME=your_database_user
+    DB_PASSWORD=your_database_password
+    ```
+5.  Generate application key:
+    ```
+    php artisan jwt:secret
+    ```
+6.  Run migrations below to seed the database with 1 admin and 1 guest user (For test purposes):
+    ```
+    php artisan db:seed UserSeeder
+    ```
+7.  Run the Laravel development server:
+    ```
+    php artisan serve
+    ```
+    
+## Importing Hotel Data
 
-2. **Retrieve hotel details**  
-   - Fetches all details of a hotel by its `ID`.  
+The application provides a command-line tool to import hotel data from JSON or CSV files.
 
-3. **Create a new hotel**  
-   - Adds a new hotel to the database.  
+### Import Commands
+To import hotels from a JSON file:
+```
+php artisan app:import-hotels hotels.json
+```
+To import hotels from a CSV file (semicolon `;` as delimiter):
+```
+php artisan app:import-hotels hotels.csv --delimiter=";"
+```
+## API Endpoints
 
-4. **Update an existing hotel**  
-   - Modifies the details of a given hotel.  
+### Authentication
+-   **Login** (Returns JWT token)
+    ```
+    POST /api/login
+    ```
+### Hotels Management
 
-5. **Delete a hotel** *(Soft Delete)*  
-   - The hotel should not be permanently deleted but instead flagged as deleted.
+-   **List all hotels**
+    ```
+    GET /api/hotels
+    ```
+    _Response:_  `id`, `name`, `image`, `stars`, `city`
+    
+-   **Retrieve hotel details**
+    ```
+    GET /api/hotels/{id}
+    ```
+-   **Create a new hotel**
+    ```
+    POST /api/hotels
+    ```
+-   **Update an existing hotel**
+    ```
+    PUT /api/hotels/{id}
+    ```
+-   **Soft delete a hotel**
+    ```
+    DELETE /api/hotels/{id}
+    ```
 
----
+## Testing with Postman
 
-##### **Submission**
-- Submit the code to this **GitHub repository**.
-- Ensure the repository includes a **README.md** with:
-  - Project overview.
-  - Setup instructions.
-  - Any additional notes or dependencies.
-
----
-
-## **Evaluation Criteria**
-As we are looking for a **senior developer**, the primary evaluation criteria will be:
-
-✅ **Code Quality:** Clean, consistent, scalable, and performant code.  
-✅ **Separation of Concerns:** Well-structured components, services, and utilities.  
-✅ **SOLID Principles & Design Patterns:** Demonstrating maintainable and extensible architecture.  
-✅ **Proper use of HTTP verbs and status codes:** Ensure that API calls correctly implement methods like `GET`, `POST`, `PUT`, and `DELETE`, and return appropriate error codes.  
-✅ **Best Practices:** Proper use of version control and documentation.
-
----
-
-### **Final Notes**
-- The test is designed to assess your ability to write **efficient, maintainable, and high-quality code**.
-- Feel free to ask any clarifying questions before starting.
+A Postman collection is available in the main directory. Import it into Postman to test the API endpoints easily.
