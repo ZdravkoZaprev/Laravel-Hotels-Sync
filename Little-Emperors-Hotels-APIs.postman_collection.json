@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "20abe28e-58de-49fa-9f60-ebfb7e85dfbb",
+		"name": "Little-Emperors-Hotels-APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "121864",
+		"_collection_link": "https://winter-sunset-55129.postman.co/workspace/New-Team-Workspace~0513bc95-ca71-406f-9f2b-02e409c949bc/collection/121864-20abe28e-58de-49fa-9f60-ebfb7e85dfbb?action=share&source=collection_link&creator=121864"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is within an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the response schema for the presence of token, user id, name, email, email_verified_at, created_at, updated_at, and role properties\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.token).to.exist;\r",
+							"    pm.expect(responseData.user.id).to.exist;\r",
+							"    pm.expect(responseData.user.name).to.exist;\r",
+							"    pm.expect(responseData.user.email).to.exist;\r",
+							"    pm.expect(responseData.user.email_verified_at).to.exist;\r",
+							"    pm.expect(responseData.user.created_at).to.exist;\r",
+							"    pm.expect(responseData.user.updated_at).to.exist;\r",
+							"    pm.expect(responseData.user.role).to.exist;\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"if (jsonData.token) {\r",
+							"    pm.environment.set(\"token\", jsonData.token);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@test.com\",\r\n    \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ALL Hotels",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/hotels",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Hotel Details",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/hotels/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"hotels",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Hotel",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Four Seasons, Park Lane\",\r\n    \"image\": \"https://d13bre0qp8legl.cloudfront.net/hotels/25/bdfd747c70ea3fe549e2ec8c001e9802.jpeg\",\r\n    \"city\": \"London\",\r\n    \"address\": \"Four Seasons Hotel London at Park Lane, Mayfair, London W1J, UK\",\r\n    \"description\": \"Surronded by greenery in the heart of Mayfair,the luxurious and redesigned Four Seasons Hotel London at Park Lane is unique in London, yet still true to the city. Four Seasons Hotel London at Park Lane’s chic design, high-style dining, skilled concierge team and glass-walled rooftop spa and lounge offer travellers to London the highest degree of efficiency and modern sophistication at this London luxury hotel on Park Lane. The Fitness Centre at luxury Four Seasons Hotel London at Park Lane features state-of-the-art cardio and weight-training equipment. Located on the 10th floor, it will inspire your workout with southeast views of Big Ben, the Houses of Parliament and the London Eye. Amaranto is a single London fine dining destination with three different areas – restaurant, bar and lounge – serving an Italian-inspired menu with international flavours throughout the day.\",\r\n    \"stars\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/hotels",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Hotel",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"address\": \"New Adress (Changed)\",\r\n    \"name\": \"Hotel name |(Changed)\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/hotels/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"hotels",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Hotel",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/hotels/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"hotels",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"var jsonData = pm.response.json();\r",
+					"if (jsonData.token) {\r",
+					"    pm.environment.set(\"authToken\", jsonData.token);\r",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
